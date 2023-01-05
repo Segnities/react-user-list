@@ -24,6 +24,14 @@ function App() {
         }
     }
 
+    const onChangeLimit = (value) => {
+        if(value === 'all') {
+            setLimit(users.length);
+        } else {
+            setLimit(parseInt(value));
+        }
+    }
+
     const searchUser = useMemo(() => {
         return [...users].filter(user => user.email.toLowerCase().includes(filter.query.toLowerCase()));
     }, [filter.query]);
@@ -34,7 +42,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header filter={filter} setFilter={setFilter} onLogoClick={onLogoClick} theme={theme}/>
+            <Header filter={filter} setFilter={setFilter} onLogoClick={onLogoClick} theme={theme} onChangeLimit={onChangeLimit}/>
             <main>
                 <h2 className="text-start mx-4 p-3">Find user:</h2>
                 <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser}/>

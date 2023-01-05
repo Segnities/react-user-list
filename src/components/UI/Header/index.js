@@ -3,30 +3,34 @@ import {Form, Navbar, Container, Button, OverlayTrigger, Tooltip} from "react-bo
 
 import {BsBootstrap} from "@react-icons/all-files/bs/BsBootstrap";
 import {BiSearch} from "@react-icons/all-files/bi/BiSearch";
-import {GiHamburger} from "@react-icons/all-files/gi/GiHamburger";
 
 import "./index.scss";
 import {useReziseObserver} from "../../../hooks/useReziseObserver";
 
 const Desktop = (props) => {
+    const {filter, setFilter, onChangeLimit} = props;
     return (
         <Container className={'d-flex'}>
             <OverlayTrigger placement={'bottom'}
                             overlay={<Tooltip id={`tooltip-select-bottom`}>Select count of displayed
                                 users. <strong>Select item and click apply</strong></Tooltip>}>
-                <Form.Select className={'mx-3'}>
+                <Form.Select className={'mx-3'} value={filter.select} onChange={(e) => {
+                    setFilter({...filter, select: e.target.value})
+                }}>
+                    <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
+                    <option value="200">200</option>
                     <option value="all">All</option>
                 </Form.Select>
             </OverlayTrigger>
-            <Button variant={'outline-light'}>Apply</Button>
+            <Button variant={'outline-light'} onClick={() => onChangeLimit(filter.select)}>Apply</Button>
         </Container>
     )
 }
 
 const Header = (props) => {
-    const {filter, theme, setFilter, onLogoClick} = props;
+    const {filter, theme, setFilter, onLogoClick, onChangeLimit} = props;
     const [animation, setAnimation] = useState(false);
     const clientWidth = useReziseObserver();
 
@@ -55,7 +59,8 @@ const Header = (props) => {
                             <BiSearch className={'position-absolute BiSearch'}/>
                         </Container>
                         {
-                            clientWidth > 480 && <Desktop/>
+                            clientWidth > 480 &&
+                            <Desktop filter={filter} setFilter={setFilter} onChangeLimit={onChangeLimit}/>
                         }
                     </Form>
                 </Container>

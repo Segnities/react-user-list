@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accordion} from "react-bootstrap";
+import {Accordion, Button, ButtonGroup} from "react-bootstrap";
 
 import "./index.scss";
 
@@ -13,6 +13,10 @@ const UserListItem = (props) => {
                     <p>Last name: {props.user.last_name}</p>
                     <p>Gender: {props.user.gender}</p>
                     <p>Ip address: {props.user.ip_address}</p>
+                    <div className={"d-flex justify-content-end"}>
+                        <Button variant={"warning"} className={"mx-2"}>Redact</Button>
+                        <Button variant={"danger"} className={"mx-2"}>Delete</Button>
+                    </div>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>
