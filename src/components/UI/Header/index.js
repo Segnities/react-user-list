@@ -16,8 +16,10 @@ const Desktop = (props) => {
     const {filter, setFilter, onChangeLimit} = props;
     return (
         <Container className={'d-flex'}>
-            <OverlayTrigger placement={'bottom'} overlay={<Tooltip id={'tooltip-select-query-bottom'}>Select type of search.<strong>Select value and click apply button</strong></Tooltip>}>
-                <Form.Select>
+            <OverlayTrigger placement={'bottom'}
+                            overlay={<Tooltip id={'tooltip-select-query-bottom'}><strong>Select type of search.</strong></Tooltip>}>
+                <Form.Select value={filter.selectQuery}
+                             onChange={(e) => setFilter({...filter, selectQuery: e.target.value})}>
                     <option value="first_name">First name</option>
                     <option value="last_name">Last name</option>
                     <option value="email">Email</option>
@@ -61,7 +63,7 @@ const Header = (props) => {
                                 onLogoClick()
                             }}/>
                     </Navbar.Brand>
-                    <Form className="d-flex justify-content-between align-items-center position-relative form-control-lg">
+                    <Form className="d-flex justify-content-between align-items-center position-relative md-width-800">
                         <Container className={'d-flex align-items-center position-relative'}>
                             <Form.Control
                                 value={filter.query}
