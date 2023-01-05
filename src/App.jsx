@@ -36,6 +36,12 @@ function App() {
         return [...users].filter(user => user.email.toLowerCase().includes(filter.query.toLowerCase()));
     }, [filter.query]);
 
+    const deleteUser = (usr) => {
+        setUsers(users.filter(user => user.id !== usr.id));
+        alert(`User ${usr.first_name} ${usr.last_name} with email ${usr.email} was deleted!`);
+    }
+
+
     useEffect(() => {
         setUsers(data);
     }, []);
@@ -43,9 +49,9 @@ function App() {
     return (
         <div className="App">
             <Header filter={filter} setFilter={setFilter} onLogoClick={onLogoClick} theme={theme} onChangeLimit={onChangeLimit}/>
-            <main>
-                <h2 className="text-start mx-4 p-3">Find user:</h2>
-                <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser}/>
+            <main className={theme === 'dark' ? 'dark-theme' : 'light-theme'}>
+                <h2 className={`text-start mx-4 py-3 ${ theme === 'dark' ? "dark-header-2": "light-header-2"}`}>Find user:</h2>
+                <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser} deleteUser={deleteUser} theme={theme}/>
             </main>
         </div>
     )
