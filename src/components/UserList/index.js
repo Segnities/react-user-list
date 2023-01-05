@@ -2,9 +2,9 @@ import React from 'react';
 
 import StartList from "./StartList";
 import FiltredList from "./FiltredList";
+import UserListItem from "./UserListItem";
 
 import "./index.scss";
-import UserListItem from "./UserListItem";
 
 const UserList = (props) => {
     const {query, startUsersList, searchUser, deleteUser, theme} = props;
