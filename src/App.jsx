@@ -16,6 +16,8 @@ function App() {
     const [limit, setLimit] = useState(25);
     const [theme, setHeaderTheme] = useState('primary');
 
+    const mainStyles = `wrapper ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`
+
     const onLogoClick = () => {
         if (theme === 'primary') {
             setHeaderTheme('dark');
@@ -49,7 +51,7 @@ function App() {
     return (
         <div className="App">
             <Header filter={filter} setFilter={setFilter} onLogoClick={onLogoClick} theme={theme} onChangeLimit={onChangeLimit}/>
-            <main className={theme === 'dark' ? 'dark-theme' : 'light-theme'}>
+            <main className={mainStyles}>
                 <h2 className={`text-start mx-4 py-3 ${ theme === 'dark' ? "dark-header-2": "light-header-2"}`}>Find user:</h2>
                 <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser} deleteUser={deleteUser} theme={theme}/>
             </main>
