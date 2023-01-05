@@ -11,7 +11,7 @@ function App() {
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState({
         query: "",
-        select: ""
+        selectLimit: ""
     });
     const [limit, setLimit] = useState(25);
     const [theme, setHeaderTheme] = useState('primary');
