@@ -41,8 +41,12 @@ function App() {
     }, [filter.query, filter.selectQuery]);
 
     const deleteUser = (usr) => {
-        setUsers(users.filter(user => user.id !== usr.id));
-        alert(`User ${usr.first_name} ${usr.last_name} with email ${usr.email} was deleted!`);
+        const confirmDeleteUser = window.confirm("Press OK to confirm delete of user");
+        if (confirmDeleteUser) {
+            setUsers(users.filter(user => user.id !== usr.id));
+            alert(`User ${usr.first_name} ${usr.last_name} with email ${usr.email} was deleted!`);
+        }
+
     }
 
 
@@ -56,7 +60,8 @@ function App() {
                     onChangeLimit={onChangeLimit}/>
             <main className={mainStyles}>
                 <h2 className={headerStyles}>Find user:</h2>
-                <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser} deleteUser={deleteUser} theme={theme}/>
+                <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser}
+                          deleteUser={deleteUser} theme={theme}/>
             </main>
         </div>
     )
