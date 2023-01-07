@@ -3,7 +3,7 @@ import React, {useEffect, useState, useMemo} from "react";
 import Header from "./components/UI/Header";
 import UserList from "./components/UserList";
 
-import {RedactModal} from "./components/UI/Modals";
+import {CreateModal, RedactModal} from "./components/UI/Modals";
 
 import data from "./data/MOCK_DATA.json";
 
@@ -20,7 +20,7 @@ function App() {
     const [theme, setHeaderTheme] = useState('primary');
     const [modal, setModal] = useState({
         redact: false,
-        delete: false
+        create: false
     });
     const [user, setUser] = useState({});
 
@@ -57,12 +57,16 @@ function App() {
 
     const redactUser = (usr) => {
         setUsers(users.map(user => {
-            if(user.id === usr.id) {
+            if (user.id === usr.id) {
                 return usr;
             } else {
                 return user;
             }
         }));
+    }
+
+    const createUser = (usr) => {
+        setUsers([...users, usr]);
     }
 
 
@@ -73,10 +77,14 @@ function App() {
     return (
         <div className="App">
             {
-                modal.redact &&  <RedactModal modal={modal} setModal={setModal} user={user} setUser={setUser} redactUser={redactUser}/>
+                modal.redact &&
+                <RedactModal modal={modal} setModal={setModal} user={user} setUser={setUser} redactUser={redactUser}/>
+            }
+            {
+                modal.create && <CreateModal modal={modal} setModal={setModal} createUser={createUser}/>
             }
             <Header filter={filter} setFilter={setFilter} onLogoClick={onLogoClick} theme={theme}
-                    onChangeLimit={onChangeLimit}/>
+                    onChangeLimit={onChangeLimit} modal={modal} setModal={setModal}/>
             <main className={mainStyles}>
                 <h2 className={headerStyles}>Find user:</h2>
                 <UserList query={filter.query} startUsersList={[...users].slice(0, limit)} searchUser={searchUser}
