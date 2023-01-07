@@ -7,6 +7,7 @@ import {useReziseObserver} from "../../../hooks/useReziseObserver";
 
 import {BsBootstrap} from "@react-icons/all-files/bs/BsBootstrap";
 import {BiSearch} from "@react-icons/all-files/bi/BiSearch";
+import {AiOutlineUserAdd} from "@react-icons/all-files/ai/AiOutlineUserAdd";
 
 
 import "./index.scss";
@@ -39,13 +40,14 @@ const Desktop = (props) => {
                     <option value="all">All</option>
                 </Form.Select>
             </OverlayTrigger>
-            <Button variant={'outline-light'} onClick={() => onChangeLimit(filter.selectLimit)}>Apply</Button>
+            <Button variant={'outline-light'} className={'px-2'}
+                    onClick={() => onChangeLimit(filter.selectLimit)}>Apply</Button>
         </Container>
     )
 }
 
 const Header = (props) => {
-    const {filter, theme, setFilter, onLogoClick, onChangeLimit} = props;
+    const {filter, theme, setFilter, onLogoClick, onChangeLimit, modal,setModal} = props;
     const [animation, setAnimation] = useState(false);
     const clientWidth = useReziseObserver();
 
@@ -74,6 +76,7 @@ const Header = (props) => {
                                 aria-describedby="basic-addon2"
                             />
                             <BiSearch className={'position-absolute BiSearch'}/>
+                            <AiOutlineUserAdd className={'position-absolute AiOutlineUserAdd'} onClick={()=> setModal({...modal, create: true})}/>
                         </Container>
                         {
                             clientWidth > 480 &&
