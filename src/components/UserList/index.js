@@ -1,8 +1,8 @@
 import React from 'react';
 
-import StartList from "./StartList";
-import FiltredList from "./FiltredList";
 import UserListItem from "./UserListItem";
+
+import {TransitionGroup, CSSTransition} from "react-transition-group";
 
 import "./index.scss";
 
@@ -11,24 +11,35 @@ const UserList = (props) => {
 
     return (
         <div className={"px-4 py-2"}>
+            {
+                searchUser.length === 0 && <h3 className={'text-center'}>Users not found!</h3>
+            }
             {query.split('').filter(it => it != ' ').join('') === ''
                 ?
-                <StartList>
-                    {startUsersList.map(user => (
-                        <UserListItem user={user} key={user.id} deleteUser={deleteUser} theme={theme}
-                                      modal={modal} setModal={setModal} setUser={setUser}/>))}
-                </StartList>
+                (
+                    <TransitionGroup className={"users-list"}>
+                        {
+                            startUsersList.map(user => (
+                                <CSSTransition key={user.id} classNames={"user"} timeout={800}>
+                                    <UserListItem user={user} key={user.id} deleteUser={deleteUser} theme={theme}
+                                                  modal={modal} setModal={setModal} setUser={setUser}/>
+                                </CSSTransition>))
+                        }
+                    </TransitionGroup>
+                )
                 :
-                <FiltredList>
-                    {
-                        searchUser.length !== 0 ?
+                (
+                    <TransitionGroup>
+                        {
+                            searchUser.length !== 0 &&
                             searchUser.slice(0, 8).map((user) => (
-                                <UserListItem user={user} key={user.id} deleteUser={deleteUser} theme={theme}
-                                              modal={modal} setModal={setModal} setUser={setUser}/>))
-                            :
-                            <h3 className={'text-center'}>Users not found!</h3>
-                    }
-                </FiltredList>
+                                <CSSTransition key={user.id} classNames={"user"} timeout={800}>
+                                    <UserListItem user={user} key={user.id} deleteUser={deleteUser} theme={theme}
+                                                  modal={modal} setModal={setModal} setUser={setUser}/>
+                                </CSSTransition>))
+                        }
+                    </TransitionGroup>
+                )
             }
         </div>
     );
