@@ -8,13 +8,14 @@ import "./index.scss";
 
 const UserList = (props) => {
     const {query, startUsersList, searchUser, deleteUser, theme, modal, setModal, setUser} = props;
+    const emptyQuery = query.split('').filter(it => it != ' ').join('') === '';
 
     return (
         <div className={"px-4 py-2"}>
             {
-                searchUser.length === 0 && <h3 className={'text-center'}>Users not found!</h3>
+                !emptyQuery && searchUser.length === 0 ? <h3>Users  not found!</h3> : null
             }
-            {query.split('').filter(it => it != ' ').join('') === ''
+            {emptyQuery
                 ?
                 (
                     <TransitionGroup className={"users-list"}>
